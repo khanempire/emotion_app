@@ -1,24 +1,48 @@
-import logo from './logo.svg';
-import './App.css';
+import react,{useState} from 'react';
+import  "./App.css";
 
 function App() {
+
+  const emotionDictionary={
+    "🏕️":"Camping",
+    "🏖️":"Beach with umbrella",
+    "🏝️":"Desert Island",
+    "🗻":"Mountain Fuji",
+    "🏔️":"Snow capped mountain",
+    "🏞️":"National Park"
+  }
+
+  const emotionWeKnow=Object.keys(emotionDictionary);
+
+  const [travel, setTravel] = useState("");
+
+  const inputHandler= (event) => {
+     const value=event.target.value;
+     const meaning=emotionDictionary[value];
+     setTravel(meaning);
+  }
+
+  const emotionClickHandler= (emotion) =>{
+    const meaning=emotionDictionary[emotion];
+    setTravel(meaning);
+  }
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+      <div>
+          <h1>Find your Emotion with travel and places</h1>
+          <input  onChange={inputHandler}/>
+          <h2 className="emotionMeaning">{travel}</h2>
+          <h2>Travel and places sign we know</h2>
+          {
+            emotionWeKnow.map((emotion)=>{
+               return <span
+                onClick={()=>emotionClickHandler(emotion)}
+                 key={emotion}>
+                 {emotion}
+                 </span>
+          })
+          }
+
+      </div>    
   );
 }
 
